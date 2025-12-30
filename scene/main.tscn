@@ -1,0 +1,29 @@
+[gd_scene load_steps=6 format=3 uid="uid://dv7w5kjlj277x"]
+
+[ext_resource type="PackedScene" uid="uid://cnvele56bg7pc" path="res://scene/paddle.tscn" id="1_itxqv"]
+[ext_resource type="Script" uid="uid://dc7mwqhuol7m" path="res://scripts/main.gd" id="1_wp4xf"]
+[ext_resource type="PackedScene" uid="uid://blvb415kw51kl" path="res://scene/ball.tscn" id="3_brvut"]
+[ext_resource type="ColorPalette" uid="uid://r2a0ma6hhkf6" path="res://assets/block_colors.tres" id="4_0ha60"]
+[ext_resource type="PackedScene" uid="uid://n2ysylqlgv8v" path="res://scene/block.tscn" id="4_brvut"]
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_wp4xf")
+Block = ExtResource("4_brvut")
+Ball_scene = ExtResource("3_brvut")
+Block_Color_Palette = ExtResource("4_0ha60")
+
+[node name="paddle" parent="." instance=ExtResource("1_itxqv")]
+position = Vector2(213, 433)
+wall_min_slide_angle = 0.0
+
+[node name="Ball" parent="." instance=ExtResource("3_brvut")]
+position = Vector2(215, 309)
+collision_layer = 2
+collision_mask = 5
+
+[node name="Points" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+
+[connection signal="hit_block" from="Ball" to="." method="_on_ball_hit_block"]
+[connection signal="left_playfield" from="Ball" to="." method="_on_ball_left_playfield"]
