@@ -27,5 +27,4 @@ collision_mask = 5
 offset_right = 40.0
 offset_bottom = 23.0
 
-[connection signal="hit_block" from="Ball" to="." method="_on_ball_hit_block"]
-[connection signal="left_playfield" from="Ball" to="." method="_on_ball_left_playfield"]
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
