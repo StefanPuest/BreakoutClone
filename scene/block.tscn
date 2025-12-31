@@ -6,8 +6,9 @@
 size = Vector2(40, 8)
 
 [node name="Block" type="StaticBody2D"]
+collision_layer = 4
+collision_mask = 9
 script = ExtResource("1_xv03h")
-points = 100
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
 position = Vector2(20, 4)

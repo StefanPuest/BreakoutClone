@@ -1,4 +1,4 @@
-extends RigidBody2D
+extends Area2D
 
 
 # Called when the node enters the scene tree for the first time.
@@ -12,7 +12,5 @@ func _process(delta: float) -> void:
 	
 
 func _on_body_entered(body: Node) -> void:
-	#emit_signal("hit_block", body)
-	#EventBus.on_explosion_hit_block.emit(body)
 	EventBus.emit_signal("on_explosion_hit_block", self, body)
 	print("explode HIT")

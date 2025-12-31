@@ -36,26 +36,23 @@ func _process(delta: float) -> void:
 
 func _on_ball_hit_block(block: Node) -> void:
 	_remove_block(block)
-	_roll_items(block)
-	$AudioStreamPlayer2D.stream = preload("res://assets/audio/paddle_hit.wav")
-	$AudioStreamPlayer2D.play()
 		
 func _remove_block(block: Node) -> void:
+	_roll_items(block)		
 	remove_child(block)
 	points_count += block.points
-	$Points.text = str(points_count)			
+	$Points.text = str(points_count)	
 
 func _add_ball(position: Vector2, velocity: Vector2) -> void:
 	var ball = Ball_scene.instantiate()
 	get_tree().current_scene.call_deferred("add_child", ball)
 	ball.position = position
 	ball.velocity = velocity
-	#ball.hit_block.connect(_on_ball_hit_block)
 	balls_in_game += 1
 	
 func _roll_items(block: Node) -> void:
 	var random_item = randi() % 10
-	if random_item >= 1:
+	if random_item == 1:
 		_add_ball(block.position, Vector2(0.0, -1.0))
 	elif random_item == 2:
 		$paddle.is_big = true
@@ -65,6 +62,7 @@ func _roll_items(block: Node) -> void:
 		print("MAGNETIC PADDLE")	
 		
 func _generate_explostion(block: Node) -> void:
+	EventBus.on_explosion.emit()
 	var explosion = Block_Explosion.instantiate()
 	explosion.position = block.position
 	get_tree().current_scene.call_deferred("add_child", explosion)
@@ -79,6 +77,5 @@ func _on_ball_left_playfield(ball: Area2D) -> void:
 	if balls_in_game <= 0:
 		print("game over")
 
-func _on_explosion_hit_block(block: Node) -> void:
-	print("exploded block")
-	remove_child(block)
+func _on_explosion_hit_block(explosion: Node, block: Node) -> void:
+	_remove_block(block)
