@@ -4,6 +4,7 @@ extends Node2D
 @export var Block: PackedScene
 @export var Ball_scene: PackedScene
 @export var Block_Color_Palette: ColorPalette
+@export var Block_Explosion: PackedScene
 
 
 var points_count = 0
@@ -40,27 +41,38 @@ func _on_ball_left_playfield(ball: Area2D) -> void:
 
 
 func _on_ball_hit_block(block: Node) -> void:
-	remove_child(block) # Replace with function body.
-	points_count += block.points
-	print(points_count)
-	$Points.text = str(points_count)
-	
-	var random_item = randi() % 10
-	if random_item == 1:
-		add_ball(block.position, Vector2(0.0, -1.0))
-	elif random_item == 2:
-		$paddle.is_big = true
-	elif random_item == 3:
-		print("EXPLODE BALL")
-	elif random_item == 4:
-		print("MAGNETIC PADDLE")
+	_remove_block(block)
+	_roll_items(block)
 		
-				
+func _remove_block(block: Node) -> void:
+	remove_child(block)
+	points_count += block.points
+	$Points.text = str(points_count)			
 
-func add_ball(position: Vector2, velocity: Vector2) -> void:
+func _add_ball(position: Vector2, velocity: Vector2) -> void:
 	var ball = Ball_scene.instantiate()
 	get_tree().current_scene.call_deferred("add_child", ball)
 	ball.position = position
 	ball.velocity = velocity
 	ball.hit_block.connect(_on_ball_hit_block)
 	balls_in_game += 1
+	
+func _roll_items(block: Node) -> void:
+	var random_item = randi() % 10
+	if random_item == 1:
+		_add_ball(block.position, Vector2(0.0, -1.0))
+	elif random_item == 2:
+		$paddle.is_big = true
+	elif random_item == 3:
+		var explosion = Block_Explosion.instantiate()
+		explosion.position = block.position
+		get_tree().current_scene.call_deferred("add_child", explosion)
+		explosion.find_child("CPUParticles2D").emitting = true
+		explosion.hit_block.connect(_on_explosion_hit_block)
+		print("EXPLODE BALL")
+	elif random_item == 4:
+		print("MAGNETIC PADDLE")	
+
+func _on_explosion_hit_block(block: Node) -> void:
+	print("exploded block")
+	remove_child(block)

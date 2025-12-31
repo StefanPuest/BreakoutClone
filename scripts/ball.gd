@@ -41,6 +41,6 @@ func _on_body_entered(body: Node) -> void:
 	if body.get_class() == "StaticBody2D":
 		print("block hit")
 		emit_signal("hit_block", body)
-	else:
+	elif body.get_class() == "CharacterBody2D":
 		direction_modifier = body.velocity.normalized() * direction_modifier_strenth
 	_reflect_ball(direction_modifier)

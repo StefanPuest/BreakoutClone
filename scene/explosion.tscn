@@ -1,0 +1,39 @@
+[gd_scene load_steps=4 format=3 uid="uid://b3gq67k40w7qr"]
+
+[ext_resource type="Script" uid="uid://cyfi2noinhiqj" path="res://scripts/explosion.gd" id="1_xjdxb"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_g5op2"]
+radius = 50.0
+
+[sub_resource type="Gradient" id="Gradient_4pm0n"]
+offsets = PackedFloat32Array(0.006289308, 1)
+colors = PackedColorArray(1, 0, 0, 1, 1, 1, 0, 0)
+
+[node name="Explosion" type="RigidBody2D"]
+collision_layer = 8
+collision_mask = 4
+sleeping = true
+freeze = true
+freeze_mode = 1
+script = ExtResource("1_xjdxb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_g5op2")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 256
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+lifetime_randomness = 0.5
+emission_shape = 1
+emission_sphere_radius = 25.0
+gravity = Vector2(0, 0)
+radial_accel_min = 25.0
+radial_accel_max = 50.0
+angle_max = 360.0
+scale_amount_max = 10.0
+color_ramp = SubResource("Gradient_4pm0n")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
