@@ -10,6 +10,7 @@ var velocity = Vector2(0.0, 0.0)
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	velocity = Vector2(0.2, 1.0).normalized() * speed
+	connect("body_entered", _on_body_entered)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -38,7 +39,9 @@ func _on_body_entered(body: Node) -> void:
 	
 	if body.get_class() == "StaticBody2D":
 		EventBus.on_ball_hit_block.emit(body)
+		print("BALL HIT BLOCK")
 	elif body.get_class() == "CharacterBody2D":
+		print("PADDLE HIT")
 		EventBus.on_ball_hit_paddle.emit(self)
 		direction_modifier = body.velocity.normalized() * direction_modifier_strenth
 	_reflect_ball(direction_modifier)

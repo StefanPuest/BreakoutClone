@@ -6,16 +6,12 @@ extends Node2D
 @export var Block_Color_Palette: ColorPalette
 @export var Block_Explosion: PackedScene
 
-
-var points_count = 0
-var balls_in_game = 1
-
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	randomize()
 	
 	$paddle.position = Vector2(400, 560)
-	$Points.text = str(points_count)
+	$PointsCounter.text = str(GameState.points_count)
 	
 	for x in 20:
 		for y in 10:
@@ -40,26 +36,24 @@ func _on_ball_hit_block(block: Node) -> void:
 func _remove_block(block: Node) -> void:
 	_roll_items(block)		
 	remove_child(block)
-	points_count += block.points
-	$Points.text = str(points_count)	
+	EventBus.on_points_earned.emit(block.points)
+	$PointsCounter.text = str(GameState.points_count)	
 
 func _add_ball(position: Vector2, velocity: Vector2) -> void:
 	var ball = Ball_scene.instantiate()
 	get_tree().current_scene.call_deferred("add_child", ball)
 	ball.position = position
 	ball.velocity = velocity
-	balls_in_game += 1
+	GameState.balls_in_game += 1
 	
 func _roll_items(block: Node) -> void:
 	var random_item = randi() % 10
-	if random_item == 1:
+	if random_item >= 1:
 		_add_ball(block.position, Vector2(0.0, -1.0))
 	elif random_item == 2:
 		$paddle.is_big = true
 	elif random_item == 3:
 		_generate_explostion(block)
-	elif random_item == 4:
-		print("MAGNETIC PADDLE")	
 		
 func _generate_explostion(block: Node) -> void:
 	EventBus.on_explosion.emit()
@@ -67,14 +61,13 @@ func _generate_explostion(block: Node) -> void:
 	explosion.position = block.position
 	get_tree().current_scene.call_deferred("add_child", explosion)
 	explosion.find_child("CPUParticles2D").emitting = true
-	# explosion.hit_block.connect(_on_explosion_hit_block)
 	print("EXPLODE BALL")	
 		
 func _on_ball_left_playfield(ball: Area2D) -> void:
-	print(balls_in_game)
-	balls_in_game -= 1
+	print(GameState.balls_in_game)
+	GameState.balls_in_game -= 1
 	remove_child(ball)
-	if balls_in_game <= 0:
+	if GameState.balls_in_game <= 0:
 		print("game over")
 
 func _on_explosion_hit_block(explosion: Node, block: Node) -> void:

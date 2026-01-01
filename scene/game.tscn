@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dv7w5kjlj277x"]
+[gd_scene load_steps=9 format=3 uid="uid://dv7w5kjlj277x"]
 
 [ext_resource type="Script" uid="uid://dc7mwqhuol7m" path="res://scripts/game.gd" id="1_xlg7c"]
 [ext_resource type="PackedScene" uid="uid://n2ysylqlgv8v" path="res://scene/block.tscn" id="2_qpk70"]
@@ -6,6 +6,7 @@
 [ext_resource type="ColorPalette" uid="uid://r2a0ma6hhkf6" path="res://assets/block_colors.tres" id="4_17rxn"]
 [ext_resource type="PackedScene" uid="uid://b3gq67k40w7qr" path="res://scene/explosion.tscn" id="5_yq8tf"]
 [ext_resource type="PackedScene" uid="uid://cnvele56bg7pc" path="res://scene/paddle.tscn" id="6_ym5sv"]
+[ext_resource type="Script" uid="uid://dkef1wjllhu7e" path="res://scripts/points_counter.gd" id="7_ll5lq"]
 [ext_resource type="Script" uid="uid://d2pmklo1klgnb" path="res://scripts/soundEffectPlayer.gd" id="7_qpk70"]
 
 [node name="Game" type="Node2D"]
@@ -24,9 +25,10 @@ position = Vector2(215, 309)
 collision_layer = 2
 collision_mask = 5
 
-[node name="Points" type="Label" parent="."]
+[node name="PointsCounter" type="Label" parent="."]
 offset_right = 40.0
 offset_bottom = 23.0
+script = ExtResource("7_ll5lq")
 
 [node name="SoundEffectPlayer" type="AudioStreamPlayer2D" parent="."]
 script = ExtResource("7_qpk70")

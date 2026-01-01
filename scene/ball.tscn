@@ -6,6 +6,7 @@
 size = Vector2(10, 10)
 
 [node name="Ball" type="Area2D"]
+collision_mask = 5
 script = ExtResource("1_d8dhm")
 speed = 4
 metadata/_edit_vertical_guides_ = [-14.0]
@@ -17,5 +18,3 @@ polygon = PackedVector2Array(0, 0, 10, 0, 10, 10, 0, 10)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_4a1xm")
-
-[connection signal="body_entered" from="." to="." method="_on_body_entered"]
