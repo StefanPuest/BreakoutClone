@@ -10,7 +10,7 @@ extends Node2D
 func _ready() -> void:
 	randomize()
 	
-	$paddle.position = Vector2(400, 560)
+	$Paddle.position = Vector2(400, 560)
 	$PointsCounter.text = str(GameState.points_count)
 	
 	for x in 20:
@@ -48,10 +48,10 @@ func _add_ball(position: Vector2, velocity: Vector2) -> void:
 	
 func _roll_items(block: Node) -> void:
 	var random_item = randi() % 10
-	if random_item >= 1:
+	if random_item == 1:
 		_add_ball(block.position, Vector2(0.0, -1.0))
 	elif random_item == 2:
-		$paddle.is_big = true
+		$Paddle.is_big = true
 	elif random_item == 3:
 		_generate_explostion(block)
 		

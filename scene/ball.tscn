@@ -1,6 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://blvb415kw51kl"]
+[gd_scene load_steps=5 format=3 uid="uid://blvb415kw51kl"]
 
 [ext_resource type="Script" uid="uid://mcgs86fbxw8q" path="res://scripts/ball.gd" id="1_d8dhm"]
+[ext_resource type="Texture2D" uid="uid://cixgap4dr44jv" path="res://assets/radial_light_falloff.png" id="2_h6iok"]
+
+[sub_resource type="Gradient" id="Gradient_h6iok"]
+colors = PackedColorArray(0, 0.68235296, 0.38039216, 1, 0, 0.68, 0.37400013, 0)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4a1xm"]
 size = Vector2(10, 10)
@@ -11,6 +15,24 @@ script = ExtResource("1_d8dhm")
 speed = 4
 metadata/_edit_vertical_guides_ = [-14.0]
 
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+amount = 64
+lifetime = 0.4
+emission_shape = 3
+emission_rect_extents = Vector2(2.5, 2.5)
+direction = Vector2(0, 1)
+spread = 0.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 10.0
+initial_velocity_max = 100.0
+angular_velocity_max = 100.0
+linear_accel_max = 100.0
+radial_accel_max = 100.0
+scale_amount_min = 0.0
+scale_amount_max = 7.13
+color_ramp = SubResource("Gradient_h6iok")
+hue_variation_max = 1.0
+
 [node name="Polygon2D" type="Polygon2D" parent="."]
 position = Vector2(-5, -5)
 color = Color(0, 0.68235296, 0.38039216, 1)
@@ -18,3 +40,10 @@ polygon = PackedVector2Array(0, 0, 10, 0, 10, 10, 0, 10)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_4a1xm")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+color = Color(0, 0.68235296, 0.38039216, 1)
+shadow_enabled = true
+shadow_color = Color(0, 0, 0, 0.2509804)
+shadow_filter_smooth = 10.0
+texture = ExtResource("2_h6iok")

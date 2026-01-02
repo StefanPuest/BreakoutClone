@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://dv7w5kjlj277x"]
+[gd_scene load_steps=12 format=3 uid="uid://dv7w5kjlj277x"]
 
 [ext_resource type="Script" uid="uid://dc7mwqhuol7m" path="res://scripts/game.gd" id="1_xlg7c"]
 [ext_resource type="PackedScene" uid="uid://n2ysylqlgv8v" path="res://scene/block.tscn" id="2_qpk70"]
@@ -7,7 +7,22 @@
 [ext_resource type="PackedScene" uid="uid://b3gq67k40w7qr" path="res://scene/explosion.tscn" id="5_yq8tf"]
 [ext_resource type="PackedScene" uid="uid://cnvele56bg7pc" path="res://scene/paddle.tscn" id="6_ym5sv"]
 [ext_resource type="Script" uid="uid://dkef1wjllhu7e" path="res://scripts/points_counter.gd" id="7_ll5lq"]
-[ext_resource type="Script" uid="uid://d2pmklo1klgnb" path="res://scripts/soundEffectPlayer.gd" id="7_qpk70"]
+[ext_resource type="Script" uid="uid://d2pmklo1klgnb" path="res://scripts/sound_effect_player.gd" id="7_qpk70"]
+
+[sub_resource type="Gradient" id="Gradient_ll5lq"]
+offsets = PackedFloat32Array(0, 0.99691355)
+colors = PackedColorArray(0.15, 0.15, 0.15, 1, 0.3, 0.3, 0.3, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_17rxn"]
+frequency = 0.0021
+fractal_type = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_yq8tf"]
+width = 1600
+height = 1200
+noise = SubResource("FastNoiseLite_17rxn")
+color_ramp = SubResource("Gradient_ll5lq")
+seamless = true
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_xlg7c")
@@ -16,14 +31,13 @@ Ball_scene = ExtResource("3_ll5lq")
 Block_Color_Palette = ExtResource("4_17rxn")
 Block_Explosion = ExtResource("5_yq8tf")
 
-[node name="paddle" parent="." instance=ExtResource("6_ym5sv")]
+[node name="Paddle" parent="." instance=ExtResource("6_ym5sv")]
 position = Vector2(213, 433)
 wall_min_slide_angle = 0.0
 
 [node name="Ball" parent="." instance=ExtResource("3_ll5lq")]
 position = Vector2(215, 309)
 collision_layer = 2
-collision_mask = 5
 
 [node name="PointsCounter" type="Label" parent="."]
 offset_right = 40.0
@@ -32,3 +46,11 @@ script = ExtResource("7_ll5lq")
 
 [node name="SoundEffectPlayer" type="AudioStreamPlayer2D" parent="."]
 script = ExtResource("7_qpk70")
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color(0.75, 0.75, 0.75, 1)
+
+[node name="Background" type="Sprite2D" parent="."]
+z_index = -1
+position = Vector2(800, 600)
+texture = SubResource("NoiseTexture2D_yq8tf")
