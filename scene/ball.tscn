@@ -12,7 +12,6 @@ size = Vector2(10, 10)
 [node name="Ball" type="Area2D"]
 collision_mask = 5
 script = ExtResource("1_d8dhm")
-speed = 4
 metadata/_edit_vertical_guides_ = [-14.0]
 
 [node name="CPUParticles2D" type="CPUParticles2D" parent="."]
@@ -47,3 +46,4 @@ shadow_enabled = true
 shadow_color = Color(0, 0, 0, 0.2509804)
 shadow_filter_smooth = 10.0
 texture = ExtResource("2_h6iok")
+height = 64.0

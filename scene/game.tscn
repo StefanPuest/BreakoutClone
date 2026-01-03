@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dv7w5kjlj277x"]
+[gd_scene load_steps=11 format=3 uid="uid://dv7w5kjlj277x"]
 
 [ext_resource type="Script" uid="uid://dc7mwqhuol7m" path="res://scripts/game.gd" id="1_xlg7c"]
 [ext_resource type="PackedScene" uid="uid://n2ysylqlgv8v" path="res://scene/block.tscn" id="2_qpk70"]
@@ -8,21 +8,12 @@
 [ext_resource type="PackedScene" uid="uid://cnvele56bg7pc" path="res://scene/paddle.tscn" id="6_ym5sv"]
 [ext_resource type="Script" uid="uid://dkef1wjllhu7e" path="res://scripts/points_counter.gd" id="7_ll5lq"]
 [ext_resource type="Script" uid="uid://d2pmklo1klgnb" path="res://scripts/sound_effect_player.gd" id="7_qpk70"]
+[ext_resource type="Texture2D" uid="uid://biahphm7dfs3c" path="res://assets/background_noise_texture_2d.tres" id="9_17rxn"]
 
-[sub_resource type="Gradient" id="Gradient_ll5lq"]
-offsets = PackedFloat32Array(0, 0.99691355)
-colors = PackedColorArray(0.15, 0.15, 0.15, 1, 0.3, 0.3, 0.3, 1)
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_17rxn"]
-frequency = 0.0021
-fractal_type = 2
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_yq8tf"]
-width = 1600
-height = 1200
-noise = SubResource("FastNoiseLite_17rxn")
-color_ramp = SubResource("Gradient_ll5lq")
-seamless = true
+[sub_resource type="CanvasTexture" id="CanvasTexture_yq8tf"]
+diffuse_texture = ExtResource("9_17rxn")
+normal_texture = ExtResource("9_17rxn")
+specular_texture = ExtResource("9_17rxn")
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_xlg7c")
@@ -53,4 +44,4 @@ color = Color(0.75, 0.75, 0.75, 1)
 [node name="Background" type="Sprite2D" parent="."]
 z_index = -1
 position = Vector2(800, 600)
-texture = SubResource("NoiseTexture2D_yq8tf")
+texture = SubResource("CanvasTexture_yq8tf")

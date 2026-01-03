@@ -14,19 +14,32 @@ motion_mode = 1
 script = ExtResource("1_mgy5m")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource("RectangleShape2D_naixt")
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
 color = Color(0.44705883, 0, 0.32156864, 1)
 polygon = PackedVector2Array(-25, -5, 25, -5, 25, 5, -25, 5)
 
+[node name="PaddleGrowTimerIndicator" type="Polygon2D" parent="."]
+position = Vector2(0, 13)
+color = Color(0, 0.4637074, 0.82155234, 1)
+polygon = PackedVector2Array(-25, -5, 25, -5, 25, -3, -25, -3)
+
 [node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+visible = false
 occluder = SubResource("OccluderPolygon2D_mgy5m")
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
+visible = false
 color = Color(0.44705883, 0, 0.32156864, 1)
 shadow_enabled = true
 shadow_color = Color(0.25, 0.25, 0.25, 0)
 shadow_item_cull_mask = 2
 texture = ExtResource("2_g2524")
 texture_scale = 2.0
+
+[node name="PaddleGrowTimer" type="Timer" parent="."]
+wait_time = 10.0
+
+[connection signal="timeout" from="PaddleGrowTimer" to="." method="_on_paddle_grow_timer_timeout"]
